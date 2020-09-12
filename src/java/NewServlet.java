@@ -6,12 +6,16 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import org.jboss.logging.Logger;
+import org.json.JSONObject;
+import org.json.JSONException;
+import sun.util.logging.PlatformLogger;
 /**
  *
  * @author zeus
@@ -28,26 +32,22 @@ public class NewServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    int array;
+    boolean intgreso=false;
+    Alumno[]arrayNue=new Alumno[10];
+    JSONObject temp= new JSONObject();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, JSONException {
         response.setContentType("text/html;charset=UTF-8");
         
-        int noCarne = Integer.parseInt(request.getParameter("nocarne")) ;
+        //int noCarne = Integer.parseInt(request.getParameter("nocarne")) ;
         //String nombreAlum = request.getParameter("nombre") ;
         //Alumno traer = new Alumno();
          //traer.setCarne (request.getParameter("nocarne"));
        
         try (PrintWriter out = response.getWriter()) {
            
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");  
-            out.println("<head>");
-            out.println("<title>Servlet NewServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Su Carné es: "+ noCarne + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+          
         }
     }
 
@@ -63,7 +63,42 @@ public class NewServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+            array = Integer.parseInt(request.getParameter("pControl"));
+            log("Hi");
+            if (intgreso == false) {
+                try {
+                    temp.put("nocarne","No Ingresado");
+                    temp.put("nombre","No Ingresado");
+                    temp.put("correo","No Ingresado");
+                    temp.put("cel","No Ingresado");
+                    temp.put("diric","No Ingresado");
+                    log("No secuencia");
+                    response.getWriter().write(temp.toString());
+                
+                } catch (JSONException ex){
+                   
+                    java.util.logging.Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            
+            }else{
+                try {
+                    temp.put("nocarne", arrayNue[array].getCarne());
+                    temp.put("nombre", arrayNue[array].getNombre());
+                    temp.put("correo", arrayNue[array].getCorreo());
+                    temp.put("cel", arrayNue[array].getNumero());
+                    temp.put("diric", arrayNue[array].getDireccion());
+                    log("secuencia");
+                    response.getWriter().write(temp.toString());
+                
+                
+                }catch (JSONException ex){
+                   
+                    java.util.logging.Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            
+            
+            }
+    
     }
 
     /**
@@ -77,21 +112,26 @@ public class NewServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        intgreso = true;
+        log ("hacer");
+        array = Integer.parseInt(request.getParameter("pControlReg"));
+        arrayNue[array] = new Alumno();
+        log(request.getParameter("pControlReg"));
+        arrayNue[array].setCarne(request.getParameter("nocarne"));
+        arrayNue[array].setNombre(request.getParameter("nombre"));
+        arrayNue[array].setCorreo(request.getParameter("correo"));
+        arrayNue[array].setNumero(request.getParameter("cel"));
+        arrayNue[array].setDireccion(request.getParameter("diric"));
+       
+        
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+  
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
-    private void getParameter(String nocarne) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 
 }

@@ -1,37 +1,21 @@
 import java.util.Scanner;
  
 public class Alumno {
-    int n;
-    Alumno[]vectorAlumno=new Alumno[10];
-    int [] carne = new int[4] ;
-    String nombre;
-    String correo;
-    int numero;
-    String direcc;
-    double dato=0;
+    Alumno[] vectorAlumno = new Alumno[10];
+    String carne,nombre,correo,numero,direccion;
 
-    public Alumno[] getVectorAlumno() {
-        return vectorAlumno;
-        
+    Alumno() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void setVectorAlumno(Alumno[] vectorAlumno) {
-        this.vectorAlumno = vectorAlumno;
-        
-    }
-
-    public int[] getCarne() {
+   
+    public String getCarne() {
         return carne;
     }
 
-    public void setCarne(int[] carne) {
+    public void setCarne(String carne) {
         this.carne = carne;
     }
-     
-    
-    
-
- 
 
     public String getNombre() {
         return nombre;
@@ -49,21 +33,30 @@ public class Alumno {
         this.correo = correo;
     }
 
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
-    public String getDirecc() {
-        return direcc;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setDirecc(String direcc) {
-        this.direcc = direcc;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
+
+    public Alumno(String carne, String nombre, String correo, String numero, String direccion) {
+        this.carne = carne;
+        this.nombre = nombre;
+        this.correo = correo;
+        this.numero = numero;
+        this.direccion = direccion;
+    }
+    
     
     
     
@@ -72,10 +65,11 @@ public class Alumno {
     public void main(String[] args){
         Scanner dr=new Scanner(System.in);
        
-        
-        for (int i = 0; i < vectorAlumno.length; i++) {
-            carne[4] = dr.nextInt(i);
-           
+        int contenedorCarne[] = new int [10]; 
+        for (int i = 0; i < contenedorCarne.length; i++) {
+            
+           contenedorCarne[i]=dr.nextInt();
+            
             
             
         }
